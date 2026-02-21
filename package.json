@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@ai-sdk/google-vertex": "^4.0.61",
+    "@google-cloud/vertexai": "^1.10.0",
+    "@google/genai": "^1.42.0",
+    "@langchain/textsplitters": "^1.0.1",
+    "@pinecone-database/pinecone": "^7.1.0",
+    "ai": "^6.0.97",
+    "dotenv": "^17.3.1",
+    "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "ingest": "tsx scripts/ingest.ts"
+  }
+}
