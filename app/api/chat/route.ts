@@ -3,6 +3,7 @@ import { createVertex } from '@ai-sdk/google-vertex';
 import { embedQuery } from '@/lib/rag/embeddings';
 import { retrieveContext } from '@/lib/rag/retriever';
 import { buildSystemPrompt } from '@/lib/rag/prompt-builder';
+import { logChatMessage } from '@/lib/logger';
 
 // Vercel AI SDK + Vertex provider — handles LLM streaming
 const vertex = createVertex({
@@ -69,6 +70,9 @@ export async function POST(req: Request) {
                 { status: 400 }
             );
         }
+
+        // --- Log payload asynchronously to abstracted monitoring services ---
+        logChatMessage({ message: lastMessage, req }).catch(e => console.error("Logging dispatcher error:", e));
 
         // --- RAG Pipeline ---
         const queryEmbedding = await embedQuery(lastMessage);
