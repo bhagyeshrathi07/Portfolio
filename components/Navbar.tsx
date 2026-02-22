@@ -63,10 +63,7 @@ export default function Navbar() {
         >
             <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""} ${hidden ? "navbar-hidden" : ""}`}>
                 <div className="nav-inner">
-                    {/* Monogram top-left */}
-                    <a href="#" className="nav-logo" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-                        <span className="nav-monogram">BR</span>
-                    </a>
+                    {/* Monogram removed per user request */}
 
                     <button
                         className="nav-toggle"
