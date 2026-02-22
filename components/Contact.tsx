@@ -34,7 +34,7 @@ export default function Contact() {
                 </div>
             </div>
             <footer className="footer">
-                <p>© {new Date().getFullYear()} {PROFILE.name}</p>
+                <p>© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</p>
             </footer>
         </section>
     );
