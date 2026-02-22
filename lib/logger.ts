@@ -37,6 +37,30 @@ export async function logChatMessage({ message, req }: LogPayload) {
     await Promise.allSettled(loggingPromises);
 }
 
+export async function logAiResponse({ message, aiResponse, req }: { message: string, aiResponse: string, req: Request }) {
+    if (!process.env.DISCORD_WEBHOOK_URL) return;
+
+    try {
+        const embed = {
+            title: "AI Response Generated",
+            description: `**In reply to:**\n> ${message.length > 200 ? message.substring(0, 197) + "..." : message}`,
+            color: 0x2b2d31, // Dark grey background for AI
+            fields: [
+                { name: "Output", value: aiResponse.length > 1024 ? aiResponse.substring(0, 1021) + "..." : aiResponse, inline: false }
+            ],
+            timestamp: new Date().toISOString()
+        };
+
+        await fetch(process.env.DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ embeds: [embed] })
+        });
+    } catch (e) {
+        console.error("Failed to log AI response to discord", e);
+    }
+}
+
 // --- Specific Service Implementations ---
 
 async function sendToDiscord({ message, ip, location }: { message: string, ip: string, location: string }) {
