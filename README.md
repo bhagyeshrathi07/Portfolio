@@ -26,9 +26,17 @@ User Question → Embed Query (text-embedding-005) → Vector Search (Pinecone)
 ```
 Portfolio/
 ├── app/
+│   ├── layout.tsx                # Root layout with SEO metadata
+│   ├── page.tsx                  # Landing page (chat UI placeholder)
 │   └── api/
 │       └── chat/
-│           └── route.ts          # RAG API endpoint (embed → retrieve → stream)
+│           └── route.ts          # RAG API endpoint (orchestrator)
+├── lib/
+│   ├── pinecone.ts               # Pinecone client singleton
+│   └── rag/
+│       ├── embeddings.ts         # Query embedding generation
+│       ├── retriever.ts          # Pinecone vector search + filtering
+│       └── prompt-builder.ts     # System prompt with guardrails
 ├── scripts/
 │   └── ingest.ts                 # PDF → chunks → embeddings → Pinecone
 ├── data/
@@ -40,8 +48,6 @@ Portfolio/
 │   ├── 4-security.test.ts        # Prompt injection & input validation
 │   ├── utils.ts                  # Shared test runner & assertions
 │   └── run-all.ts                # Sequential test runner
-├── lib/                          # (planned) Shared utilities
-├── components/                   # (planned) React UI components
 ├── .env.local                    # API keys (not committed)
 ├── package.json
 └── tsconfig.json
