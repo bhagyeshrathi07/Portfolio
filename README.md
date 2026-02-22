@@ -1,11 +1,23 @@
-# Bhagyesh Rathi — RAG-Powered Portfolio
+# Bhagyesh Rathi — Portfolio
 
-An AI-powered portfolio chatbot that answers questions about my professional background using **Retrieval-Augmented Generation (RAG)**. Built with Next.js, Pinecone, and Google Vertex AI.
+A dark-themed, editorial-style portfolio website with an integrated **RAG-powered AI chatbot** that answers questions about my professional background. Built with Next.js 16, React 19, Pinecone, and Google Vertex AI.
 
-## How It Works
+## Live Sections
+
+- **Hero** — Bold typographic headline with layered text-shadow effect
+- **About** — Multi-paragraph bio
+- **Experience** — Timeline of professional roles at Rakuten
+- **Research Interests** — Active research papers and projects
+- **Projects** — Project cards with GitHub/live links and tech tags
+- **Skills** — Animated conveyor belt with dynamically rendered `react-icons`
+- **Education** — Academic background and certifications
+- **Contact** — Email, phone, GitHub, LinkedIn links
+- **Ask AI** — Floating chatbot button → `/chat` route with RAG pipeline
+
+## RAG Pipeline
 
 ```
-User Question → Embed Query (text-embedding-005) → Vector Search (Pinecone)
+User Question → Embed (text-embedding-005) → Vector Search (Pinecone)
 → Retrieve Top-K Chunks → Build Prompt with Context → LLM (Gemini 2.5 Flash)
 → Streamed Response (SSE) → Chat UI
 ```
@@ -13,38 +25,55 @@ User Question → Embed Query (text-embedding-005) → Vector Search (Pinecone)
 ## Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| **Framework** | Next.js 16 (App Router) |
+|-------|------------|
+| **Framework** | Next.js 16 (App Router, Turbopack) |
 | **Frontend** | React 19 + `@ai-sdk/react` (`useChat` hook) |
-| **Embeddings** | Google `text-embedding-005` via `@google/genai` |
+| **Styling** | Vanilla CSS — editorial dark theme with `Bebas Neue` typography |
+| **Embeddings** | Google `text-embedding-005` via `@ai-sdk/google-vertex` |
 | **Vector DB** | Pinecone (cosine metric, 768 dimensions) |
 | **LLM** | Gemini 2.5 Flash via `@ai-sdk/google-vertex` |
 | **Streaming** | Vercel AI SDK (`streamText` + `toUIMessageStreamResponse`) |
 | **Ingestion** | LangChain `RecursiveCharacterTextSplitter` + `pdf-parse` |
+| **Icons** | `react-icons` (dynamically mapped via `SKILL_ICONS` registry) |
+| **Deployment** | Vercel |
 
 ## Project Structure
 
 ```
 Portfolio/
 ├── app/
-│   ├── globals.css                # Dark theme design system
-│   ├── layout.tsx                 # Root layout with SEO metadata
-│   ├── page.tsx                   # Renders chat interface
+│   ├── globals.css                # Dark editorial design system
+│   ├── layout.tsx                 # Root layout with SEO + fonts
+│   ├── page.tsx                   # Main portfolio page (all sections)
+│   ├── chat/
+│   │   └── page.tsx               # Standalone AI chatbot page
 │   └── api/
 │       └── chat/
 │           └── route.ts           # RAG API endpoint (orchestrator)
 ├── components/
-│   └── ChatFrontend.tsx           # Chat UI (useChat, streaming, suggestions)
+│   ├── Navbar.tsx                 # Sticky nav with smooth scroll
+│   ├── Hero.tsx                   # Typographic hero with overlapping text
+│   ├── About.tsx                  # Multi-paragraph bio
+│   ├── Experience.tsx             # Work experience timeline
+│   ├── Research.tsx               # Research interests grid
+│   ├── Projects.tsx               # Project cards with highlights
+│   ├── Skills.tsx                 # Animated conveyor belt with icons
+│   ├── Education.tsx              # Academic background
+│   ├── Contact.tsx                # Contact links + footer
+│   ├── ChatButton.tsx             # Floating "Ask AI" button
+│   └── ChatFrontend.tsx           # Chat UI (useChat, streaming)
+├── data/
+│   └── profile.ts                 # All portfolio content + skill icon registry
 ├── lib/
 │   ├── pinecone.ts                # Pinecone client singleton
 │   └── rag/
-│       ├── embeddings.ts          # Query embedding generation
+│       ├── embeddings.ts          # Query embedding (Vertex AI)
 │       ├── retriever.ts           # Pinecone vector search + filtering
 │       └── prompt-builder.ts      # System prompt with guardrails
 ├── scripts/
 │   └── ingest.ts                  # PDF → chunks → embeddings → Pinecone
-├── data/
-│   └── Bhagyesh_Resume.pdf        # Source document
+├── public/
+│   └── Bhagyesh_Resume.pdf        # Source document for RAG
 ├── tests/
 │   ├── 1-embedding.test.ts        # Embedding model connectivity & quality
 │   ├── 2-retrieval.test.ts        # Pinecone vector search validation
@@ -82,8 +111,8 @@ Portfolio/
 ### Prerequisites
 - Node.js 18+
 - Google Cloud project with Vertex AI enabled
+- GCP service account key (JSON)
 - Pinecone account with an index (768 dims, cosine metric)
-- Google AI API key
 
 ### 1. Install dependencies
 ```bash
@@ -91,13 +120,15 @@ npm install
 ```
 
 ### 2. Configure environment
-Create `.env.local` with:
+Create `.env.local`:
 ```env
-GOOGLE_AI_KEY=your-google-ai-api-key
+PINECONE_API_KEY=your-pinecone-api-key
+PINECONE_INDEX_NAME=resume-index
+
 GOOGLE_CLOUD_PROJECT=your-gcp-project-id
 GOOGLE_CLOUD_LOCATION=us-central1
-PINECONE_API_KEY=your-pinecone-api-key
-PINECONE_INDEX_NAME=your-index-name
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
+GOOGLE_GENAI_USE_VERTEXAI=true
 ```
 
 ### 3. Ingest resume data
@@ -112,12 +143,28 @@ npm run dev
 
 ### 5. Run tests
 ```bash
-npm test                                # All tests
+npm test                                # All 4 test suites (27 tests)
 npx tsx tests/1-embedding.test.ts       # Embedding only
 npx tsx tests/3-pipeline.test.ts        # Requires dev server running
 ```
 
 > **Note:** Tests hit real APIs and cost real API calls. Run intentionally, not in CI loops.
+
+## Deploying to Vercel
+
+Since Vercel cannot read local JSON key files, the app supports direct credential injection via environment variables:
+
+| Variable | Value |
+|----------|-------|
+| `PINECONE_API_KEY` | Your Pinecone API key |
+| `PINECONE_INDEX_NAME` | `resume-index` |
+| `GOOGLE_CLOUD_PROJECT` | Your GCP project ID |
+| `GOOGLE_CLOUD_LOCATION` | `us-central1` |
+| `GOOGLE_GENAI_USE_VERTEXAI` | `true` |
+| `GOOGLE_CLIENT_EMAIL` | `client_email` from your service account JSON |
+| `GOOGLE_PRIVATE_KEY` | `private_key` from your service account JSON |
+
+The app automatically detects whether `GOOGLE_CLIENT_EMAIL` / `GOOGLE_PRIVATE_KEY` are set and uses them for auth. Otherwise, it falls back to local `GOOGLE_APPLICATION_CREDENTIALS`.
 
 ## Security
 
@@ -135,4 +182,8 @@ npx tsx tests/3-pipeline.test.ts        # Requires dev server running
 | `npm run build` | Production build |
 | `npm run start` | Start production server |
 | `npm run ingest` | Ingest resume PDF into Pinecone |
-| `npm test` | Run all integration tests |
+| `npm test` | Run all 4 integration test suites |
+
+## Customization
+
+All portfolio content lives in `data/profile.ts`. To update skills, experience, projects, or research interests, edit that single file. To add a new skill icon, import it from `react-icons` and add it to the `SKILL_ICONS` map in the same file.
