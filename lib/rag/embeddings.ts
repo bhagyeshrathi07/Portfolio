@@ -1,6 +1,19 @@
-import { GoogleGenAI } from '@google/genai';
+import { embed } from 'ai';
+import { createVertex } from '@ai-sdk/google-vertex';
 
-const genai = new GoogleGenAI({ apiKey: process.env.GOOGLE_AI_KEY! });
+// Keep auth unified with the chat route
+const vertex = createVertex({
+    project: process.env.GOOGLE_CLOUD_PROJECT!,
+    location: process.env.GOOGLE_CLOUD_LOCATION!,
+    googleAuthOptions: process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY
+        ? {
+            credentials: {
+                client_email: process.env.GOOGLE_CLIENT_EMAIL,
+                private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+            },
+        }
+        : undefined, // Falls back to local GOOGLE_APPLICATION_CREDENTIALS in dev
+});
 
 const EMBEDDING_MODEL = 'text-embedding-005';
 
@@ -9,17 +22,10 @@ const EMBEDDING_MODEL = 'text-embedding-005';
  * Uses Google's text-embedding-005 model (768 dimensions).
  */
 export async function embedQuery(text: string): Promise<number[]> {
-    const response = await genai.models.embedContent({
-        model: EMBEDDING_MODEL,
-        contents: text,
-        config: {
-            taskType: 'RETRIEVAL_QUERY',
-        },
+    const { embedding } = await embed({
+        model: vertex.textEmbeddingModel(EMBEDDING_MODEL),
+        value: text,
     });
 
-    const values = response.embeddings?.[0]?.values;
-    if (!values) {
-        throw new Error('Failed to generate embedding');
-    }
-    return values;
+    return embedding;
 }

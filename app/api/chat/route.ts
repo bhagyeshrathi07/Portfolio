@@ -8,6 +8,14 @@ import { buildSystemPrompt } from '@/lib/rag/prompt-builder';
 const vertex = createVertex({
     project: process.env.GOOGLE_CLOUD_PROJECT!,
     location: process.env.GOOGLE_CLOUD_LOCATION!,
+    googleAuthOptions: process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY
+        ? {
+            credentials: {
+                client_email: process.env.GOOGLE_CLIENT_EMAIL,
+                private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+            },
+        }
+        : undefined, // Falls back to local GOOGLE_APPLICATION_CREDENTIALS file path in dev
 });
 
 // Extract text from a message — handles both v6 UIMessage (parts) and legacy (content)
