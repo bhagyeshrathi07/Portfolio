@@ -408,11 +408,65 @@ a {
     gap: 24px;
 }
 
-.hero-ctas {
+.hero-dropdown {
+    position: relative;
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-dropdown-toggle {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
     justify-content: center;
+    padding: 10px;
+    outline: none;
+    animation: levitate 2s ease-in-out infinite;
+}
+
+@keyframes levitate {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+.hero-dropdown-toggle:hover {
+    color: var(--accent);
+}
+
+.hero-dropdown-toggle.open {
+    animation: none;
+    transform: rotate(180deg);
+}
+
+.hero-dropdown-menu {
+    display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-dropdown-menu.open {
+    opacity: 1;
+    max-height: 400px;
+    margin-top: 16px;
+    padding-bottom: 16px;
 }
 
 .hero-location {
@@ -1405,18 +1459,8 @@ a {
         font-size: 1.1rem;
     }
 
-    .hero-ctas {
+    .hero-dropdown-menu {
         gap: 8px;
-    }
-
-    .hero-ctas .cta-outline {
-        font-size: 0.7rem;
-        padding: 10px 16px;
-    }
-
-    .hero-ctas .cta-primary {
-        font-size: 0.7rem;
-        padding: 10px 16px;
     }
 
     .hero-bottom {
@@ -1562,19 +1606,15 @@ a {
         letter-spacing: 0.15em;
     }
 
-    .hero-ctas {
+    .hero-dropdown-menu {
         flex-direction: column;
         width: 100%;
         align-items: center;
     }
 
-    .hero-ctas .cta-outline,
-    .hero-ctas .cta-primary {
+    .hero-dropdown-menu .btn {
         width: 100%;
-        max-width: 220px;
-        text-align: center;
-        font-size: 0.7rem;
-        padding: 10px 12px;
+        max-width: 260px;
     }
 
     .section {
