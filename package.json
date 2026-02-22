@@ -1,4 +1,5 @@
 {
+  "name": "rag-portfolio",
   "dependencies": {
     "@ai-sdk/google-vertex": "^4.0.61",
     "@google-cloud/vertexai": "^1.10.0",
@@ -22,6 +23,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "ingest": "tsx scripts/ingest.ts"
+    "ingest": "tsx scripts/ingest.ts",
+    "test": "tsx tests/run-all.ts"
   }
 }
