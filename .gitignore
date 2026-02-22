@@ -54,3 +54,6 @@ coverage/
 .cache/
 tmp/
 temp/
+
+# Personal notes (local only)
+INTERVIEW_PREP.md
