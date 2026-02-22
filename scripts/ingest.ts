@@ -11,9 +11,11 @@ dotenv.config({ path: '.env.local' });
 const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY! });
 const indexName = process.env.PINECONE_INDEX_NAME!;
 
-// Initialize the Google GenAI client with Vertex AI
-const ai = new GoogleGenAI({
-    vertexai: true,
+import { embedMany } from 'ai';
+import { createVertex } from '@ai-sdk/google-vertex';
+
+// Initialize the Google Vertex AI client (same auth as the main app)
+const vertex = createVertex({
     project: process.env.GOOGLE_CLOUD_PROJECT!,
     location: process.env.GOOGLE_CLOUD_LOCATION!,
 });
@@ -24,7 +26,7 @@ async function main() {
     console.log('Starting ingestion pipeline...');
 
     // Read Resume/portfolio Data
-    const filePath = path.join(process.cwd(), 'data', 'Bhagyesh_resume.pdf');
+    const filePath = path.join(process.cwd(), 'public', 'Bhagyesh_Resume.pdf');
     const dataBuffer = fs.readFileSync(filePath);
     const pdf = new PDFParse(new Uint8Array(dataBuffer));
     const result = await pdf.getText();
@@ -45,19 +47,19 @@ async function main() {
     const vectorsToUpsert: Array<{ id: string; values: number[]; metadata: { text: string; source: string } }> = [];
 
     // Generate Embeddings & Prepare Vectors
+    console.log(`Generating embeddings for ${chunks.length} chunks...`);
+    const chunkTexts = chunks.map(chunk => chunk.pageContent);
+
+    // Use the new Vercel AI SDK to generate embeddings in bulk
+    const { embeddings } = await embedMany({
+        model: vertex.textEmbeddingModel('text-embedding-005'),
+        values: chunkTexts,
+    });
+
     for (let i = 0; i < chunks.length; i++) {
         const chunkText = chunks[i].pageContent;
+        const embeddingValues = embeddings[i];
 
-        // Use the @google/genai SDK to generate embeddings via Vertex AI
-        const response = await ai.models.embedContent({
-            model: 'text-embedding-005',
-            contents: chunkText,
-            config: {
-                taskType: 'RETRIEVAL_DOCUMENT',
-            },
-        });
-
-        const embeddingValues = response.embeddings?.[0]?.values;
         if (!embeddingValues) {
             console.error(`Failed to generate embedding for chunk ${i}`);
             continue;
