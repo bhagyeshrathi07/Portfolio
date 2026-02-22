@@ -72,7 +72,7 @@ export async function POST(req: Request) {
             model: vertex('gemini-2.5-flash'),
             system: systemPrompt,
             messages: normalizeMessages(messages),
-            temperature: 0.3,
+            temperature: 0.4,
             maxOutputTokens: 812,
         });
 
