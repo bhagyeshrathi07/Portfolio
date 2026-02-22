@@ -4,7 +4,7 @@ A dark-themed, editorial-style portfolio website with an integrated **RAG-powere
 
 ## Live Sections
 
-- **Hero** — Bold typographic headline with layered text-shadow effect
+- **Hero** — Bold typographic headline with an interactive dropdown menu for dual CTAs
 - **About** — Multi-paragraph bio
 - **Experience** — Timeline of professional roles at Rakuten
 - **Research Interests** — Active research papers and projects
@@ -12,7 +12,8 @@ A dark-themed, editorial-style portfolio website with an integrated **RAG-powere
 - **Skills** — Animated conveyor belt with dynamically rendered `react-icons`
 - **Education** — Academic background and certifications
 - **Contact** — Email, phone, GitHub, LinkedIn links
-- **Ask AI** — Floating chatbot button → `/chat` route with RAG pipeline
+- **Ask AI** — Floating chatbot button → `/chat` route with a RAG pipeline and fully formatted **Markdown** responses
+- **Favicon** — Custom SVG icon matching the hero typography with 3D overlapping concrete shadows
 
 ## RAG Pipeline
 
@@ -27,7 +28,7 @@ User Question → Embed (text-embedding-005) → Vector Search (Pinecone)
 | Layer | Technology |
 |-------|------------|
 | **Framework** | Next.js 16 (App Router, Turbopack) |
-| **Frontend** | React 19 + `@ai-sdk/react` (`useChat` hook) |
+| **Frontend** | React 19 + `@ai-sdk/react` + `react-markdown` (`remark-gfm`) |
 | **Styling** | Vanilla CSS — editorial dark theme with `Bebas Neue` typography |
 | **Embeddings** | Google `text-embedding-005` via `@ai-sdk/google-vertex` |
 | **Vector DB** | Pinecone (cosine metric, 768 dimensions) |
