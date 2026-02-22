@@ -10,6 +10,31 @@ const vertex = createVertex({
     location: process.env.GOOGLE_CLOUD_LOCATION!,
 });
 
+// Extract text from a message — handles both v6 UIMessage (parts) and legacy (content)
+function extractTextFromMessage(msg: any): string {
+    if (typeof msg.content === 'string') return msg.content;
+    if (Array.isArray(msg.parts)) {
+        return msg.parts
+            .filter((p: any) => p.type === 'text')
+            .map((p: any) => p.text)
+            .join('');
+    }
+    return '';
+}
+
+// Normalize messages to {role, content} format that streamText accepts
+function normalizeMessages(msgs: any[]): Array<{ role: 'user' | 'assistant'; content: string }> {
+    return msgs
+        .filter((m: any) => m.role === 'user' || m.role === 'assistant')
+        .map((m: any) => ({
+            role: m.role as 'user' | 'assistant',
+            content: extractTextFromMessage(m),
+        }));
+}
+
+// Prevent Next.js from buffering the streaming response
+export const dynamic = 'force-dynamic';
+
 // ------------------------------------------------
 // API Route Handler
 // ------------------------------------------------
@@ -28,9 +53,9 @@ export async function POST(req: Request) {
             );
         }
         // get user's latest question 
-        const lastMessage = messages[messages.length - 1].content;
+        const lastMessage = extractTextFromMessage(messages[messages.length - 1]);
 
-        if (typeof lastMessage !== 'string' || lastMessage.length > 500) {
+        if (!lastMessage || lastMessage.length > 500) {
             return new Response(
                 JSON.stringify({ error: 'Message must be a string under 500 characters' }),
                 { status: 400 }
@@ -46,12 +71,12 @@ export async function POST(req: Request) {
         const result = streamText({
             model: vertex('gemini-2.5-flash'),
             system: systemPrompt,
-            messages: messages,
+            messages: normalizeMessages(messages),
             temperature: 0.3,
-            maxOutputTokens: 1024,
+            maxOutputTokens: 812,
         });
 
-        return result.toTextStreamResponse();
+        return result.toUIMessageStreamResponse();
 
     } catch (error) {
         console.error('[RAG Pipeline Error]', error);

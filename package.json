@@ -1,7 +1,10 @@
 {
   "name": "rag-portfolio",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@ai-sdk/google-vertex": "^4.0.61",
+    "@ai-sdk/react": "^3.0.99",
     "@google-cloud/vertexai": "^1.10.0",
     "@google/genai": "^1.42.0",
     "@langchain/textsplitters": "^1.0.1",
