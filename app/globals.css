@@ -38,7 +38,7 @@
     --radius-md: 8px;
     --radius-lg: 12px;
     --radius-xl: 24px;
-    --max-width: 1100px;
+    --max-width: 1400px;
 
     /* Motion */
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -412,6 +412,7 @@ a {
     display: flex;
     gap: 12px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .hero-location {
@@ -1021,9 +1022,9 @@ a {
     display: flex;
     flex-direction: column;
     flex: 1;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 clamp(16px, 4vw, 60px);
     overflow: hidden;
 }
 
@@ -1201,7 +1202,7 @@ a {
 }
 
 .message-bubble {
-    max-width: 85%;
+    max-width: min(85%, 700px);
     padding: 12px 16px;
     border-radius: var(--radius-md);
     font-size: 0.88rem;
@@ -1393,21 +1394,43 @@ a {
     }
 
     .hero {
-        padding: 0 20px;
+        padding: 0 16px;
     }
 
     .hero-line {
-        font-size: clamp(2.5rem, 12vw, 3.5rem);
+        font-size: clamp(2.2rem, 11vw, 3.5rem);
+    }
+
+    .hero-label {
+        font-size: 1.1rem;
+    }
+
+    .hero-ctas {
+        gap: 8px;
+    }
+
+    .hero-ctas .cta-outline {
+        font-size: 0.7rem;
+        padding: 10px 16px;
+    }
+
+    .hero-ctas .cta-primary {
+        font-size: 0.7rem;
+        padding: 10px 16px;
     }
 
     .hero-bottom {
         flex-direction: column;
         gap: 24px;
-        align-items: flex-start;
+        align-items: center;
     }
 
     .section {
-        padding: 60px 20px;
+        padding: 60px 16px;
+    }
+
+    .about-text {
+        max-width: 100% !important;
     }
 
     .about-grid {
@@ -1463,9 +1486,113 @@ a {
         align-items: center;
     }
 
+    .chat-back {
+        padding: 12px 16px;
+    }
+
+    .app-container {
+        padding: 0 12px;
+    }
+
+    .header {
+        padding: 16px 0 12px;
+    }
+
+    .header h1 {
+        font-size: 1.05rem;
+    }
+
+    .header-logo-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .input-form {
+        gap: 8px;
+    }
+
+    .input-field {
+        padding: 10px 12px;
+        font-size: 0.84rem;
+    }
+
+    .send-button {
+        padding: 10px 16px;
+        font-size: 0.72rem;
+    }
+
+    .input-area {
+        padding: 12px 0 16px;
+    }
+
+    .input-hint {
+        font-size: 0.6rem;
+    }
+
+    .suggestion-chip {
+        font-size: 0.72rem;
+        padding: 6px 12px;
+    }
+
+    .messages-empty h2 {
+        font-size: 0.95rem;
+    }
+
+    .messages-empty p {
+        font-size: 0.78rem;
+    }
+
     .chat-fab {
-        bottom: 16px;
-        right: 16px;
-        padding: 12px 18px;
+        bottom: 12px;
+        right: 12px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small screens (phones < 480px) */
+@media (max-width: 480px) {
+    .hero-line {
+        font-size: clamp(1.8rem, 10vw, 2.5rem);
+    }
+
+    .hero-label {
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+    }
+
+    .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .hero-ctas .cta-outline,
+    .hero-ctas .cta-primary {
+        width: 100%;
+        max-width: 220px;
+        text-align: center;
+        font-size: 0.7rem;
+        padding: 10px 12px;
+    }
+
+    .section {
+        padding: 40px 12px;
+    }
+
+    .section-title {
+        font-size: 0.95rem;
+    }
+
+    .project-card {
+        padding: 20px;
+    }
+
+    .chat-fab {
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.75rem;
+        padding: 6px 12px;
     }
 }

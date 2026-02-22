@@ -122,7 +122,7 @@ export const PROFILE = {
     email: "bhageyesh2161@gmail.com",
     phone: "+1 (669) 888-6214",
     github: "https://github.com/bhagyeshrathi07",
-    linkedin: "https://linkedin.com/in/bhagyeshrathi",
+    linkedin: "https://www.linkedin.com/in/bhagyeshrathi07/",
     resumeUrl: "/Bhagyesh_Resume.pdf",
 };
 
