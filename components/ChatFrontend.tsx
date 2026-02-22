@@ -2,6 +2,8 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const SUGGESTIONS = [
     "What's your work experience?",
@@ -97,7 +99,9 @@ export default function ChatFrontend() {
                                 {message.role === "user" ? "You" : "AI"}
                             </span>
                             <div className="message-bubble">
-                                {getMessageText(message)}
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {getMessageText(message)}
+                                </ReactMarkdown>
                             </div>
                         </div>
                     ))

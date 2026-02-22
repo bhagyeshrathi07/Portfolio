@@ -1,5 +1,4 @@
 import { Pinecone } from "@pinecone-database/pinecone";
-import { GoogleGenAI } from '@google/genai';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import * as path from 'path';
 import * as fs from 'fs';

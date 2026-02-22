@@ -1261,8 +1261,74 @@ a {
     border-radius: var(--radius-md);
     font-size: 0.88rem;
     line-height: 1.65;
-    white-space: pre-wrap;
-    word-break: break-word;
+}
+
+.message-bubble p {
+    margin-bottom: 0.75em;
+}
+
+.message-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+.message-bubble a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 87, 58, 0.4);
+    text-underline-offset: 3px;
+    transition: all var(--transition-fast);
+}
+
+.message-bubble a:hover {
+    text-decoration-color: var(--accent);
+}
+
+.message-bubble strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.message-bubble ul,
+.message-bubble ol {
+    margin-bottom: 0.75em;
+    padding-left: 1.5em;
+}
+
+.message-bubble li {
+    margin-bottom: 0.25em;
+}
+
+.message-bubble code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.15em 0.3em;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: var(--font-mono);
+    border: 1px solid var(--border-subtle);
+}
+
+.message-bubble pre {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1em;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    overflow-x: auto;
+    margin-bottom: 0.75em;
+}
+
+.message-bubble pre code {
+    background: transparent;
+    padding: 0;
+    border: none;
+    font-size: 0.8rem;
+}
+
+.message-bubble blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1em;
+    margin-bottom: 0.75em;
+    color: var(--text-muted);
+    font-style: italic;
 }
 
 .message-user .message-bubble {
