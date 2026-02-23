@@ -119,8 +119,11 @@ export const PROFILE = {
     title: "Software Engineer · AI/ML",
     tagline: "Bay Area, CA",
     bio: "I am a Software Developer and AI/ML Engineer with a passion for building intelligent, scalable systems. Currently pursuing my Master's in Artificial Intelligence at San Jose State University, my focus lies at the intersection of robust backend engineering and cutting-edge machine learning.\n\nAt Rakuten, I engineered high-impact microservices, implemented secure OAuth 2.0 architectures, and orchestrated GCP deployments with Kubernetes. Whether it's developing interactive RAG pipelines, optimizing distributed systems, or training predictive models, I thrive on turning complex technical challenges into seamless user experiences.\n\nWhen I'm not writing code, you can find me exploring the latest advancements in LLMs or refining my problem-solving skills.",
-    email: "bhageyesh2161@gmail.com",
-    phone: "+1 (669) 888-6214",
+    // Obfuscated email to prevent scraping
+    contact: {
+        emailUser: "bhageyesh2161",
+        emailDomain: "gmail.com",
+    },
     github: "https://github.com/bhagyeshrathi07",
     linkedin: "https://www.linkedin.com/in/bhagyeshrathi07/",
     resumeUrl: "/Bhagyesh_Resume.pdf",
