@@ -1,6 +1,8 @@
 import { PROFILE } from "@/data/profile";
 
 export default function Contact() {
+    const email = `${PROFILE.contact.emailUser}@${PROFILE.contact.emailDomain}`;
+
     return (
         <section id="contact" className="section">
             <h2 className="section-title">Get in Touch</h2>
@@ -10,17 +12,10 @@ export default function Contact() {
                 </p>
 
                 <div className="contact-links-minimal">
-                    <a href={`mailto:${PROFILE.email}`} className="contact-link-minimal">
+                    <a href={`mailto:${email}`} className="contact-link-minimal">
                         <span className="contact-label">Email</span>
-                        <span className="contact-value">{PROFILE.email}</span>
+                        <span className="contact-value">{email}</span>
                     </a>
-
-                    {PROFILE.phone && (
-                        <a href={`tel:${PROFILE.phone.replace(/[^0-9+]/g, '')}`} className="contact-link-minimal">
-                            <span className="contact-label">Phone</span>
-                            <span className="contact-value">{PROFILE.phone}</span>
-                        </a>
-                    )}
 
                     <a href={PROFILE.github} target="_blank" rel="noopener" className="contact-link-minimal">
                         <span className="contact-label">GitHub</span>
