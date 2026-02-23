@@ -38,7 +38,7 @@ export default function Hero() {
                                 LinkedIn
                             </a>
                             <a href="/chat" className="btn btn-ghost">
-                                Chat with Resume
+                                Chat with AI Assistant
                             </a>
                         </div>
                     </div>
