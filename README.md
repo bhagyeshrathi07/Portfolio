@@ -13,7 +13,6 @@ A dark-themed, editorial-style portfolio website with an integrated **RAG-powere
 - **Education** — Academic background and certifications
 - **Contact** — Email, phone, GitHub, LinkedIn links
 - **Ask AI** — Floating chatbot button → `/chat` route with a RAG pipeline and fully formatted **Markdown** responses
-- **Favicon** — Custom SVG icon matching the hero typography with 3D overlapping concrete shadows
 
 ## RAG Pipeline
 
