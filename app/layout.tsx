@@ -22,24 +22,54 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-    title: 'Bhagyesh Rathi — Portfolio',
+    metadataBase: new URL('https://bhagyesh.dev'), // Ensure this is your actual production domain
+    title: {
+        default: 'Bhagyesh Rathi | Software Engineer',
+        template: '%s | Bhagyesh Rathi'
+    },
     description:
-        'Software Engineer & AI/ML enthusiast. Explore my projects, experience, and skills — or chat with my AI assistant.',
-    keywords: ['Bhagyesh Rathi', 'Portfolio', 'Software Engineer', 'AI', 'Machine Learning', 'RAG'],
+        'Portfolio of Bhagyesh Rathi. Software Engineer & AI/ML enthusiast. Explore my projects, experience, and skills — or chat with my AI assistant.',
+    keywords: ['Bhagyesh Rathi', 'bhagyesh.dev', 'Bhagyesh', 'Portfolio', 'Software Engineer', 'AI', 'Machine Learning', 'RAG'],
     openGraph: {
-        title: 'Bhagyesh Rathi — Portfolio',
-        description: 'Software Engineer & AI/ML enthusiast.',
+        title: 'Bhagyesh Rathi | Software Engineer',
+        description: 'Portfolio of Bhagyesh Rathi. Software Engineer & AI/ML enthusiast.',
+        url: 'https://bhagyesh.dev',
+        siteName: 'Bhagyesh Rathi',
+        locale: 'en_US',
         type: 'website',
+    },
+    alternates: {
+        canonical: '/',
+    },
+    robots: {
+        index: true,
+        follow: true
     },
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${bebasNeue.variable}`}>
+            <head>
+                <script type="application/ld+json" dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Person",
+                        "name": "Bhagyesh Rathi",
+                        "url": "https://bhagyesh.dev",
+                        "jobTitle": "Software Engineer",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": "Bay Area",
+                            "addressRegion": "CA"
+                        },
+                        "sameAs": [
+                            "https://www.linkedin.com/in/bhagyeshrathi07/",
+                            "https://github.com/bhagyeshrathi07"
+                        ]
+                    })
+                }} />
+            </head>
             <body>{children}</body>
         </html>
     );
