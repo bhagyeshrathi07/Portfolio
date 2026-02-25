@@ -174,7 +174,7 @@ export const PROJECTS: Project[] = [
         title: "AutoML",
         description: "FullStack AutoML platform and code generator",
         tech: ["Python", "Scikit-Learn", "Flask", "React"],
-        github: "https://github.com/bhagyeshrathi07",
+        github: "https://github.com/bhagyeshrathi07/AutoML",
         highlights: [
             "Engineered an AutoML system using Scikit-Learn & Flask that automates preprocessing, task detection, and parallel model training/evaluation",
             "Designed a responsive React frontend with real-time interactive ROC/Scatter plots and confusion matrix for visualizations of top model",
