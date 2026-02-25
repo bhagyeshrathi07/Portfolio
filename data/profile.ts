@@ -187,7 +187,7 @@ export const PROJECTS: Project[] = [
         title: "Bank Churn Data Analysis and Prediction using ML",
         description: "Data analysis and prediction using ML",
         tech: ["Python", "Scikit-Learn", "Pandas", "Seaborn", "Matplotlib"],
-        live: "https://colab.research.google.com",
+        live: "https://colab.research.google.com/drive/1q-gyX8tH5f9_n9dh1pZP1d1nFQLu1AYH?usp=sharing",
         highlights: [
             "Analyzed data of 10,000 account holders at a Multinational Bank by doing exploratory data analysis with Pandas",
             "Constructed a streamlined pipeline for training 5 machine learning models to predict customer churn using Scikit-Learn",
@@ -199,7 +199,7 @@ export const PROJECTS: Project[] = [
         title: "Skin Cancer Detection using CNN",
         description: "CNN-based image classification for skin cancer detection",
         tech: ["Python", "TensorFlow", "Scikit-Learn", "Pandas", "Seaborn"],
-        live: "https://colab.research.google.com",
+        live: "https://colab.research.google.com/drive/1N38zGb4qSFGEnok99o3D9uRBoVMPlRQk?usp=sharing",
         highlights: [
             "Developed a CNN using Scikit-Learn to classify skin lesion images into 7 cancer categories, achieving 80% accuracy",
             "Preprocessed data with resizing, normalization, one-hot encoding, and oversampling to address class imbalance",
