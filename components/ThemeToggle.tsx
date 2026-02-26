@@ -29,11 +29,7 @@ export function ThemeToggle() {
             aria-label="Toggle theme"
             title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
-            {theme === "light" ? (
-                <FiMoon size={18} />
-            ) : (
-                <FiSun size={18} />
-            )}
+            {theme === "light" ? "Dark Mode" : "Light Mode"}
         </button>
     );
 }
