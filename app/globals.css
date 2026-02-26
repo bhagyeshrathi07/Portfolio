@@ -283,21 +283,18 @@ a {
     position: fixed;
     bottom: 28px;
     left: 28px;
-    /* Positioned on the left side instead of right */
-    font-family: var(--font-display), 'Oswald', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.12em;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     color: var(--accent);
-    background: rgba(10, 10, 10, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--border-subtle);
-    padding: 10px 18px;
-    border-radius: 30px;
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 300ms var(--ease);
     z-index: 90;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
     /* Center the icon */
     display: flex;
@@ -307,15 +304,30 @@ a {
 
 .theme-toggle:hover {
     border-color: var(--accent);
-    background: rgba(232, 87, 58, 0.1);
+    background: rgba(232, 87, 58, 0.15);
     box-shadow: 0 0 15px rgba(232, 87, 58, 0.3);
     transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-    .theme-toggle {
-        /* Remove previous relative positioning margins */
-    }
+.light .theme-toggle,
+[data-theme="light"] .theme-toggle,
+.light .chat-fab,
+[data-theme="light"] .chat-fab {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-primary);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.light .theme-toggle:hover,
+[data-theme="light"] .theme-toggle:hover,
+.light .chat-fab:hover,
+[data-theme="light"] .chat-fab:hover {
+    color: var(--accent);
+    background: rgba(232, 87, 58, 0.15);
+    border-color: var(--accent);
 }
 
 /* ================================================================
@@ -465,7 +477,7 @@ a {
 
 .hero-line {
     font-family: var(--font-display), 'Oswald', sans-serif;
-    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-size: clamp(3rem, 8vw, 6.5rem);
     font-weight: 400;
     letter-spacing: 0.02em;
     display: block;
@@ -507,7 +519,7 @@ a {
     z-index: 2;
     /* Overlaps light text */
     /* Dynamic scaling negative margin based on viewport width to maintain consistent visual overlap ratio */
-    margin-top: clamp(-20px, -1.8vw, -8px);
+    margin-top: clamp(-14px, -1.4vw, -6px);
     /* Pulls text up to overlap */
     text-shadow:
         1px 1px 0px var(--bg-tertiary),
@@ -537,13 +549,13 @@ a {
 .hero-line:nth-child(3) {
     z-index: 3;
     /* Highest light text */
-    margin-top: clamp(-20px, -1.8vw, -8px);
+    margin-top: clamp(-14px, -1.4vw, -6px);
 }
 
 .hero-line:nth-child(4) {
     z-index: 4;
     /* Highest overall */
-    margin-top: clamp(-20px, -1.8vw, -8px);
+    margin-top: clamp(-14px, -1.4vw, -6px);
 }
 
 .hero-bottom {
@@ -1188,21 +1200,21 @@ a {
     letter-spacing: 0.12em;
 
     color: var(--accent);
-    background: rgba(10, 10, 10, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--border-subtle);
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 10px 18px;
     border-radius: 30px;
     transition: all 300ms var(--ease);
     z-index: 90;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .chat-fab:hover {
     border-color: var(--accent);
-    background: rgba(232, 87, 58, 0.1);
+    background: rgba(232, 87, 58, 0.15);
     box-shadow: 0 0 15px rgba(232, 87, 58, 0.3);
     transform: translateY(-2px);
 }
@@ -1671,7 +1683,7 @@ a {
     }
 
     .hero-line {
-        font-size: clamp(2.2rem, 11vw, 3.5rem);
+        font-size: clamp(2rem, 9vw, 3rem);
     }
 
     .hero-label {
@@ -1806,6 +1818,13 @@ a {
         font-size: 0.78rem;
     }
 
+    .theme-toggle {
+        bottom: 12px;
+        left: 12px;
+        width: 38px;
+        height: 38px;
+    }
+
     .chat-fab {
         bottom: 12px;
         right: 12px;
@@ -1817,7 +1836,7 @@ a {
 /* Extra small screens (phones < 480px) */
 @media (max-width: 480px) {
     .hero-line {
-        font-size: clamp(1.8rem, 10vw, 2.5rem);
+        font-size: clamp(1.6rem, 8vw, 2.2rem);
     }
 
     .hero-label {
@@ -1846,6 +1865,11 @@ a {
 
     .project-card {
         padding: 20px;
+    }
+
+    .theme-toggle {
+        bottom: 10px;
+        left: 10px;
     }
 
     .chat-fab {
