@@ -32,10 +32,10 @@ async function main() {
     const text: string = result.text;
 
     // Smart Chunking (Optimizing for low-latency retrieval)
-    // We chunk by 500 characters with a 50-character overlap so context isn't lost between chunks.
+    // We chunk by 1500 characters with a 150-character overlap so entire sections like 'Projects' stay together.
     const splitter = new RecursiveCharacterTextSplitter({
-        chunkSize: 500,
-        chunkOverlap: 50,
+        chunkSize: 1500,
+        chunkOverlap: 150,
     });
 
     const chunks = await splitter.createDocuments([text]);

@@ -1,7 +1,7 @@
 import { getIndex } from '../pinecone';
 
 const TOP_K = 5;
-const SCORE_THRESHOLD = 0.5;
+const SCORE_THRESHOLD = 0.3;
 
 /**
  * Query Pinecone for the most relevant resume chunks.
