@@ -1,6 +1,6 @@
 import { getIndex } from '../pinecone';
 
-const TOP_K = 3;
+const TOP_K = 5;
 const SCORE_THRESHOLD = 0.5;
 
 /**
