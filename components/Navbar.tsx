@@ -65,13 +65,15 @@ export default function Navbar() {
                 <div className="nav-inner">
                     {/* Monogram removed per user request */}
 
-                    <button
-                        className="nav-toggle"
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        <span className={`hamburger ${menuOpen ? "open" : ""}`} />
-                    </button>
+                    <div className="flex items-center gap-4">
+                        <button
+                            className="nav-toggle"
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            aria-label="Toggle menu"
+                        >
+                            <span className={`hamburger ${menuOpen ? "open" : ""}`} />
+                        </button>
+                    </div>
 
                     {/* Links top-right */}
                     <ul className={`nav-links ${menuOpen ? "nav-links-open" : ""}`}>

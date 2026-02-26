@@ -171,6 +171,17 @@ export const PROJECTS: Project[] = [
         ],
     },
     {
+        title: "SRE Copilot: AI Incident Triage Agent for On-Call SREs",
+        description: "Built a ReAct tool-use agent that triages production incidents across 5 data sources (RAG over 768 runbooks, text-to-SQL, GCP status API vulnerability DB, web search) using dual Qwen 2.5 models (32B + 3B) on a single GPU via 4-bit quantization.",
+        tech: ["Python", "PyTorch", "LangChain", "ChromaDB"],
+        live: "https://colab.research.google.com/drive/1FS4udnPRWONulPQtHqEhcxvUe5EORvOj?usp=sharing",
+        highlights: [
+            "Evaluated 4 prompting techniques across 80 benchmarks, finding self-reflection improved answer grounding by 125% (0.40→0.90) and actionability by 100% (0.50→1.0) over baseline, while prompt chaining achieved perfect tool selection on the 32B model but failed on 3B — revealing minimum capability thresholds for structured data",
+            "Achieved ~4% prefill speedup on the 32B model by building KV cache reuse for system prompt acceleration.",
+            "Implemented defense-in-depth security (SQL injection blocking, prompt hardening) passing 3/5 red-team attacks per model; deployed via Gradio with real-time model/technique comparison",
+        ],
+    },
+    {
         title: "AutoML",
         description: "FullStack AutoML platform and code generator",
         tech: ["Python", "Scikit-Learn", "Flask", "React"],
