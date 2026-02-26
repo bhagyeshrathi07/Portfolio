@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono, Bebas_Neue } from 'next/font/google';
+import { Inter, JetBrains_Mono, Oswald } from 'next/font/google';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import './globals.css';
 
 const inter = Inter({
@@ -14,9 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
     display: 'swap',
 });
 
-const bebasNeue = Bebas_Neue({
-    weight: '400',
+const oswald = Oswald({
     subsets: ['latin'],
+    weight: '300',
     variable: '--font-display',
     display: 'swap',
 });
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${bebasNeue.variable}`}>
+        <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${oswald.variable}`}>
             <head>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
@@ -70,7 +72,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     })
                 }} />
             </head>
-            <body>{children}</body>
+            <body className="antialiased text-gray-900 bg-white dark:bg-gray-900 dark:text-gray-100 min-h-screen">
+                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                    {children}
+                    <div className="fixed bottom-7 left-7 z-50">
+                        <ThemeToggle />
+                    </div>
+                </ThemeProvider>
+            </body>
         </html>
     );
 }
