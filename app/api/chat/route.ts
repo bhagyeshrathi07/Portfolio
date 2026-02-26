@@ -85,7 +85,7 @@ export async function POST(req: Request) {
             system: systemPrompt,
             messages: normalizeMessages(messages),
             temperature: 0.4,
-            maxOutputTokens: 812,
+            maxOutputTokens: 2000,
             onFinish: async ({ text }) => {
                 // Log the final AI output to Discord lazily after stream completes
                 logAiResponse({ message: lastMessage, aiResponse: text, req }).catch(
