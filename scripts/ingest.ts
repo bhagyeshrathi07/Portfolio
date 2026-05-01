@@ -24,8 +24,9 @@ const { PDFParse } = require('pdf-parse');
 async function main() {
     console.log('Starting ingestion pipeline...');
 
-    // Read Resume/portfolio Data
-    const filePath = path.join(process.cwd(), 'public', 'Bhagyesh_Resume.pdf');
+    // Read CV (full multi-page document) for richer RAG context
+    // Note: The one-page resume (Bhagyesh_Resume.pdf) is still served via the "Resume" download button
+    const filePath = path.join(process.cwd(), 'public', 'Bhagyesh_CV.pdf');
     const dataBuffer = fs.readFileSync(filePath);
     const pdf = new PDFParse(new Uint8Array(dataBuffer));
     const result = await pdf.getText();

@@ -182,6 +182,21 @@ export const PROJECTS: Project[] = [
         ],
     },
     {
+        title: "Caption Lens — Visual-Semantic Alignment via Attention Mechanisms",
+        description: "End-to-end encoder-decoder image captioning models with attention mechanisms and interactive visualizations.",
+        tech: ["Python", "PyTorch", "ResNet-101", "LSTM", "Bahdanau Attention", "Beam Search", "Hugging Face Spaces", "Gradio", "Docker", "MS COCO 2014"],
+        live: "https://huggingface.co/spaces/bhagyeshrathi/CaptionLens",
+        highlights: [
+            "Designed and trained three end-to-end encoder-decoder image captioning models (Show-and-Tell baseline, Show-Attend-and-Tell with soft attention, and Visual Sentinel adaptive attention) on MS COCO 2014, leveraging a fine-tuned ResNet-101 CNN encoder feeding a 7×7×2048 spatial feature grid into an LSTM language decoder",
+            "Implemented Bahdanau soft attention with doubly stochastic regularization, producing dynamic per-word context vectors that boosted CIDEr from 1.023 → 1.040 and won all 8 evaluation metrics over the baseline; BLEU-4 of 0.329 materially exceeds the original 2015 paper (0.250)",
+            "Engineered beam search decoding with a 1–10 beam-width ablation that lifted CIDEr from 1.013 (greedy) to 1.093 (beam=6), identifying optimal decoding configuration and quantifying the degradation from overly wide beams",
+            "Built interpretable attention heatmap visualizations that trace each generated word back to the image region driving the prediction — turning a black-box captioner into a debuggable, explainable system",
+            "Optimized training throughput by pre-extracting CNN features to HDF5, achieving full convergence in 30 epochs / ~3 hrs per model on an RTX 6000 with Adam + ReduceLROnPlateau scheduling",
+            "Conducted CIDEr-vs-SPICE discrepancy analysis to expose blind spots in n-gram-only evaluation, demonstrating cases where models score well without semantic understanding",
+            "Deployed as an interactive multi-model demo on Hugging Face Spaces via Docker + Gradio, allowing real-time image upload, model switching, and tunable beam width with live attention heatmaps"
+        ],
+    },
+    {
         title: "AutoML",
         description: "FullStack AutoML platform and code generator",
         tech: ["Python", "Scikit-Learn", "Flask", "React"],
