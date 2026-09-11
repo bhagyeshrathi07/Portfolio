@@ -59,7 +59,10 @@ export const SKILL_ICONS: Record<string, React.ElementType> = {
     "Jira": SiJira,
     "Confluence": SiConfluence,
     "OpenTelemetry": SiOpentelemetry,
-    "Ollama": SiOllama
+    "Ollama": SiOllama,
+    "ChromaDB": FaDatabase,
+    "Google ADK": SiGooglecloud,
+    "Vertex AI": SiGooglecloud
 };
 
 export interface Experience {
@@ -69,6 +72,7 @@ export interface Experience {
     period: string;
     bullets: string[];
     tech: string[];
+    links?: { label: string; url: string }[];
 }
 
 export interface Project {
@@ -108,6 +112,10 @@ export interface Research {
     description: string;
     tech: string[];
     link?: string;
+    github?: string;
+    authors?: string;
+    venue?: string;
+    highlights?: string[];
 }
 
 // ----------------------------------------------------------------
@@ -116,9 +124,9 @@ export interface Research {
 
 export const PROFILE = {
     name: "Bhagyesh Rathi",
-    title: "Software Engineer · AI/ML",
+    title: "Software Engineer · AI/ML · Researcher",
     tagline: "Bay Area, CA",
-    bio: "I am a Software Developer and AI/ML Engineer with a passion for building intelligent, scalable systems. Currently pursuing my Master's in Artificial Intelligence at San Jose State University, my focus lies at the intersection of robust backend engineering and cutting-edge machine learning.\n\nAt Rakuten, I engineered high-impact microservices, implemented secure OAuth 2.0 architectures, and orchestrated GCP deployments with Kubernetes. Whether it's developing interactive RAG pipelines, optimizing distributed systems, or training predictive models, I thrive on turning complex technical challenges into seamless user experiences.\n\nWhen I'm not writing code, you can find me exploring the latest advancements in LLMs or refining my problem-solving skills.",
+    bio: "I am a Software Developer and AI/ML Engineer with a passion for building intelligent, scalable systems. Currently pursuing my Master's in Artificial Intelligence at San Jose State University, my focus lies at the intersection of robust backend engineering and cutting-edge machine learning.\n\nAt Rakuten, I engineered high-impact microservices, implemented secure OAuth 2.0 architectures, and orchestrated GCP deployments with Kubernetes. Whether it's developing interactive RAG pipelines, optimizing distributed systems, or training predictive models, I thrive on turning complex technical challenges into seamless user experiences.\n\nMost recently, as a Forward Deployed Engineer Intern at Scalar Field (YC P25), I built a HubSpot MCP (Model Context Protocol) server that exposes CRM data and actions as tools for LLM agents, along with a RAG chatbot for GTM queries over internal data. I also contribute to GitLab's open-source monorepo, where my merged work includes a security fix hardening the import pipeline against DoS and a new REST endpoint in the Package Registry.\n\nOn the research side, I am co-first author of \"A Comparative Evaluation of Retrieval Pipelines for Large-Scale Scientific Question Answering with Open-Weight LLMs,\" in press at IEEE AIxSET 2026, and I am currently exploring agent safety.\n\nWhen I'm not writing code, you can find me exploring the latest advancements in LLMs or refining my problem-solving skills.",
     // Obfuscated email to prevent scraping
     contact: {
         emailUser: "bhageyesh2161",
@@ -130,6 +138,32 @@ export const PROFILE = {
 };
 
 export const EXPERIENCE: Experience[] = [
+    {
+        company: "Scalar Field (YC P25)",
+        role: "Forward Deployed Engineer Intern",
+        location: "Seattle, WA",
+        period: "Jun 2026 — Aug 2026",
+        bullets: [
+            "Built a HubSpot MCP (Model Context Protocol) server exposing CRM data and actions as tools for LLM agents, enabling automated GTM workflows over the company's customer data",
+            "Developed a RAG chatbot that retrieves lead information from a knowledge base to answer GTM queries, handling retrieval and structured responses over internal data",
+        ],
+        tech: ["Python", "MCP", "LLM Agents", "RAG", "HubSpot API"],
+    },
+    {
+        company: "GitLab",
+        role: "Open Source Contributor",
+        location: "Remote",
+        period: "Apr 2026 — Present",
+        bullets: [
+            "Contributed a security fix to the GitLab monorepo enforcing streaming JSON validation limits in the import pipeline's NdjsonReader to mitigate DoS from malicious export archives (MR !224828)",
+            "Added a REST DELETE endpoint to GitLab's Package Registry with authorization policies, request specs, and API docs, aligning behavior with existing upload/download endpoints (MR !242461)",
+        ],
+        tech: ["Ruby on Rails", "REST APIs", "Security", "RSpec", "GitLab"],
+        links: [
+            { label: "MR !224828", url: "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/224828" },
+            { label: "MR !242461", url: "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/242461" },
+        ],
+    },
     {
         company: "Rakuten",
         role: "Software Engineer Intern",
@@ -159,21 +193,25 @@ export const EXPERIENCE: Experience[] = [
 
 export const PROJECTS: Project[] = [
     {
-        title: "RAG Based Interactive Resume",
-        description: "Implemented a production-grade RAG deployment on a user-facing portfolio site",
-        tech: ["Python", "Typescript", "NextJS", "Vercel", "Pinecone", "Vertex AI"],
+        title: "Production-Grade RAG Portfolio (this site)",
+        description: "Shipped a production-grade RAG chatbot serving real users on my live portfolio site, with a full ingestion pipeline and a streaming, guardrailed API",
+        tech: ["TypeScript", "NextJS", "Vercel AI SDK", "LangChain", "Pinecone", "Vertex AI", "Gemini 2.5 Flash", "Vercel"],
         github: "https://github.com/bhagyeshrathi07/Portfolio",
+        live: "https://www.bhagyesh.dev/chat",
         highlights: [
-            "Ingestion: Parsed and chunked resume PDF into semantic segments",
+            "Ingestion: Parsed and chunked the CV PDF into semantic segments (PDF → recursive chunking → 768-dim embeddings → Pinecone upsert)",
             "Embedding: Embedded text chunks using a transformer model to generate dense vector representations",
-            "Storage & Retrieval: Stored vectors in a Pinecone vector database and implemented retrieval to compare user queries against stored vectors",
-            "Generation: Passed retrieved context + query to Vertex AI (Gemini) LLM to generate accurate, context-aware responses",
+            "Storage & Retrieval: Stored vectors in a Pinecone vector database with top-K retrieval, score thresholding, and metadata filtering to minimize hallucination",
+            "Generation: Built a streaming API endpoint using Vercel AI SDK with Gemini 2.5 Flash for token-by-token delivery, achieving sub-second TTFT",
+            "Security: Hardened the system against prompt injection through input validation, system-prompt design, and topic-scoped guardrails",
+            "Testing: Authored a 27-test integration suite covering embedding quality, retrieval accuracy, pipeline correctness, and injection defense",
         ],
     },
     {
         title: "SRE Copilot: AI Incident Triage Agent for On-Call SREs",
         description: "Built a ReAct tool-use agent that triages production incidents across 5 data sources (RAG over 768 runbooks, text-to-SQL, GCP status API vulnerability DB, web search) using dual Qwen 2.5 models (32B + 3B) on a single GPU via 4-bit quantization.",
-        tech: ["Python", "PyTorch", "LangChain", "ChromaDB"],
+        tech: ["Python", "PyTorch", "LangChain", "ChromaDB", "Qwen 2.5", "Gradio"],
+        github: "https://github.com/bhagyeshrathi07/SRE-Copilot",
         live: "https://colab.research.google.com/drive/1FS4udnPRWONulPQtHqEhcxvUe5EORvOj?usp=sharing",
         highlights: [
             "Evaluated 4 prompting techniques across 80 benchmarks, finding self-reflection improved answer grounding by 125% (0.40→0.90) and actionability by 100% (0.50→1.0) over baseline, while prompt chaining achieved perfect tool selection on the 32B model but failed on 3B — revealing minimum capability thresholds for structured data",
@@ -185,6 +223,7 @@ export const PROJECTS: Project[] = [
         title: "Caption Lens — Visual-Semantic Alignment via Attention Mechanisms",
         description: "End-to-end encoder-decoder image captioning models with attention mechanisms and interactive visualizations.",
         tech: ["Python", "PyTorch", "ResNet-101", "LSTM", "Bahdanau Attention", "Beam Search", "Hugging Face Spaces", "Gradio", "Docker", "MS COCO 2014"],
+        github: "https://github.com/bhagyeshrathi07/Caption-Lens",
         live: "https://huggingface.co/spaces/bhagyeshrathi/CaptionLens",
         highlights: [
             "Designed and trained three end-to-end encoder-decoder image captioning models (Show-and-Tell baseline, Show-Attend-and-Tell with soft attention, and Visual Sentinel adaptive attention) on MS COCO 2014, leveraging a fine-tuned ResNet-101 CNN encoder feeding a 7×7×2048 spatial feature grid into an LSTM language decoder",
@@ -257,22 +296,25 @@ export const SKILLS: SkillCategory[] = [
             "Unit/Integration Testing",
             "Monitoring & Alerting",
             "Retrieval-Augmented Generation (RAG)",
+            "LLM Agents (ReAct)",
+            "Model Context Protocol (MCP)",
+            "LLM Evaluation",
         ],
     },
     {
         category: "Databases",
         icon: "🗄️",
-        skills: ["MongoDB (NoSQL)", "MySQL", "PostgreSQL", "Redis (GCP MemoryStore)", "Pinecone (Vector DB)"],
+        skills: ["MongoDB (NoSQL)", "MySQL", "PostgreSQL", "Redis (GCP MemoryStore)", "Pinecone (Vector DB)", "ChromaDB"],
     },
     {
         category: "Cloud",
         icon: "☁️",
-        skills: ["GCP", "Docker", "Kubernetes", "AWS", "Vercel", "Vertex AI"],
+        skills: ["GCP", "Docker", "Kubernetes", "AWS", "Vercel", "Vertex AI", "Google ADK"],
     },
     {
         category: "Tools",
         icon: "🔧",
-        skills: ["Git", "GitHub", "GitLab", "Postman", "Jira", "Confluence", "Ollama"],
+        skills: ["Git", "GitHub", "GitLab", "Postman", "Jira", "Confluence", "Ollama", "OpenTelemetry", "Claude Code", "Cursor"],
     },
 ];
 
@@ -312,31 +354,39 @@ export const CERTIFICATIONS: Certification[] = [
     {
         name: "Machine Learning Specialization",
         issuer: "Stanford",
-        date: "2024"
+        date: "2024",
+        link: "https://coursera.org/share/40fa2fbac98e2a1af0c19a1d1eeb1fa9",
     },
 ];
 
-// Add research items here — leave empty if none yet
+// Publications and research — leave empty if none yet
 export const RESEARCH: Research[] = [
-    // Example:
     {
-        title: "Geometric Consistency: Latent Space Pruning for Chain-of-Thought Reasoning (In Progress)",
-        description: "This paper proposes and evaluates a novel unsupervised method, Geometric Consistency, designed to enhance reasoning reliability by filtering outliers within the latent vector space.",
-        tech: ["Python", "Sentence-Transformers"],
-        link: "https://docs.google.com/document/d/1dWqgCIBGd9T699C3LidrXEcy9239KbLinzEOGbtvs8M/edit?usp=sharing"
+        title: "A Comparative Evaluation of Retrieval Pipelines for Large-Scale Scientific Question Answering with Open-Weight LLMs",
+        authors: "Rathi, B.*, Chawla, E.*, Ershov, A., Andreopoulos, W. B. (* Equal contribution)",
+        venue: "IEEE AIxSET 2026 (in press)",
+        description: "A reproducible, config-driven framework comparing six retrieval strategies for scientific question answering over a ~460K-paper arXiv corpus, evaluated with open-weight LLMs.",
+        tech: ["Python", "SPECTER2", "ChromaDB", "ColBERT (PLAID)", "Ollama", "Llama 3.1", "Qwen 2.5", "LLM-as-a-Judge"],
+        github: "https://github.com/bhagyeshrathi07/rag_eval",
+        highlights: [
+            "Built a reproducible, config-driven pipeline comparing six retrieval strategies for scientific QA over a ~460K-paper arXiv corpus, taking a research prototype to a modular, release-ready codebase",
+            "Implemented SPECTER2 domain embeddings with task-specific document/query adapters, a ChromaDB vector store, and an agentic tool-calling retriever via function-calling APIs",
+            "Deployed and optimized the full stack on an NVIDIA DGX Spark (GB10, ARM64/CUDA 13), including getting ColBERT's PLAID late-interaction index compiling on a novel architecture and serving open-weight LLMs (Llama-3.1, Qwen2.5) locally via Ollama",
+            "Designed an LLM-as-a-judge evaluation with an explicit answer/refusal gate and both conditional and unconditional scoring to fairly compare strategies with differing answer rates",
+            "Parallelized generation and evaluation stages for a ~6× throughput improvement across ~20K queries",
+        ],
     },
     {
-        title: "AutoML (In Progress)",
-        description: "Automated Machine Learning",
-        tech: ["Python", "Scikit-Learn", "Flask", "React"],
-        link: "https://..."
-    }
+        title: "PathSafe Agent: Does an Agent's Safety Depend on Where a Harmful Instruction Comes From? (In Progress)",
+        description: "Ongoing research studying whether an LLM agent's safety behavior changes depending on the source of a harmful instruction — direct user input versus content encountered through tools, documents, or other agents.",
+        tech: ["Python", "LLM Agents", "AI Safety", "Evaluation"],
+    },
 ];
 
 export const NAV_LINKS = [
     { label: "ABOUT", id: "about", href: "#about" },
     { label: "EXPERIENCE", id: "experience", href: "#experience" },
-    { label: "RESEARCH INTERESTS", id: "research", href: "#research" },
+    { label: "RESEARCH", id: "research", href: "#research" },
     { label: "PROJECTS", id: "projects", href: "#projects" },
     { label: "SKILLS", id: "skills", href: "#skills" },
     { label: "EDUCATION", id: "education", href: "#education" },

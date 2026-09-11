@@ -6,9 +6,9 @@ A dark-themed, editorial-style portfolio website with an integrated **RAG-powere
 
 - **Hero** — Bold typographic headline with an interactive dropdown menu for dual CTAs
 - **About** — Multi-paragraph bio
-- **Experience** — Timeline of professional roles at Rakuten
-- **Research Interests** — Active research papers and projects
-- **Projects** — Project cards with GitHub/live links and tech tags
+- **Experience** — Timeline of professional roles at Scalar Field (YC P25), GitLab (open source), and Rakuten, with links to merged MRs
+- **Research & Publications** — IEEE AIxSET 2026 publication (with code) and in-progress research
+- **Projects** — Project cards with GitHub, live demo, and Colab links plus tech tags
 - **Skills** — Animated conveyor belt with dynamically rendered `react-icons`
 - **Education** — Academic background and certifications
 - **Contact** — Email, phone, GitHub, LinkedIn links
@@ -55,7 +55,7 @@ Portfolio/
 │   ├── Hero.tsx                   # Typographic hero with overlapping text
 │   ├── About.tsx                  # Multi-paragraph bio
 │   ├── Experience.tsx             # Work experience timeline
-│   ├── Research.tsx               # Research interests grid
+│   ├── Research.tsx               # Publications & research grid
 │   ├── Projects.tsx               # Project cards with highlights
 │   ├── Skills.tsx                 # Animated conveyor belt with icons
 │   ├── Education.tsx              # Academic background
@@ -73,7 +73,8 @@ Portfolio/
 ├── scripts/
 │   └── ingest.ts                  # PDF → chunks → embeddings → Pinecone
 ├── public/
-│   └── Bhagyesh_Resume.pdf        # Source document for RAG
+│   ├── Bhagyesh_Resume.pdf        # One-page resume served by the "Resume" button
+│   └── Bhagyesh_CV.pdf            # Full CV — source document for RAG ingestion
 ├── tests/
 │   ├── 1-embedding.test.ts        # Embedding model connectivity & quality
 │   ├── 2-retrieval.test.ts        # Pinecone vector search validation
