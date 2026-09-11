@@ -28,6 +28,15 @@ export default function Experience() {
                                     <span key={t} className="tag">{t}</span>
                                 ))}
                             </div>
+                            {exp.links && exp.links.length > 0 && (
+                                <div className="project-links" style={{ marginTop: "0.75rem" }}>
+                                    {exp.links.map((l) => (
+                                        <a key={l.url} href={l.url} target="_blank" rel="noopener" className="project-link">
+                                            {l.label} ↗
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
